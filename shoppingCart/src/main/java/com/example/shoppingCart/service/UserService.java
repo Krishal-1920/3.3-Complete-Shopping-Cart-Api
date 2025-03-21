@@ -111,11 +111,9 @@ public class UserService {
     @Transactional
     public UserModel updateUser(Long id, UserModel userModel) {
 
-        User userEntity = userMapper.userModelToUser(userModel);
-
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException());
-
+        userMapper.updateUserModel(userModel, existingUser);
         existingUser.setUserId(id);
 
         User savedUser = userRepository.save(existingUser);
